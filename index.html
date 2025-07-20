@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jurnal Harian Guru</title>
+    <title>Sistem Pencatatan Ngaji Santri</title>
     <style>
         * {
             margin: 0;
@@ -13,13 +13,13 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #2E8B57 0%, #3CB371 100%);
             min-height: 100vh;
             padding: 20px;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             background: white;
             border-radius: 20px;
@@ -29,7 +29,7 @@
         }
 
         header {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            background: linear-gradient(135deg, #2E8B57 0%, #32CD32 100%);
             color: white;
             padding: 30px;
             text-align: center;
@@ -65,25 +65,31 @@
         .main-content {
             padding: 40px;
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr 2fr;
             gap: 40px;
             align-items: start;
         }
 
         .form-section {
-            background: linear-gradient(135deg, #f8f9ff 0%, #e8f4f8 100%);
+            background: linear-gradient(135deg, #f8fff8 0%, #e8f8e8 100%);
             padding: 30px;
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
 
         .entries-section {
-            background: linear-gradient(135deg, #fff8f0 0%, #f0f8ff 100%);
+            background: linear-gradient(135deg, #fff8f0 0%, #f0fff0 100%);
             padding: 30px;
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            max-height: 600px;
-            overflow-y: auto;
+        }
+
+        .filter-section {
+            background: linear-gradient(135deg, #f0f8ff 0%, #e6f3ff 100%);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
 
         h2 {
@@ -91,6 +97,12 @@
             margin-bottom: 20px;
             font-size: 1.8em;
             text-align: center;
+        }
+
+        h3 {
+            color: #2E8B57;
+            margin-bottom: 15px;
+            font-size: 1.4em;
         }
 
         .form-group {
@@ -115,17 +127,17 @@
 
         input:focus, textarea:focus, select:focus {
             outline: none;
-            border-color: #4facfe;
-            box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.1);
+            border-color: #2E8B57;
+            box-shadow: 0 0 0 3px rgba(46, 139, 87, 0.1);
         }
 
         textarea {
             resize: vertical;
-            min-height: 120px;
+            min-height: 100px;
         }
 
         .btn {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            background: linear-gradient(135deg, #2E8B57 0%, #32CD32 100%);
             color: white;
             padding: 12px 30px;
             border: none;
@@ -140,11 +152,29 @@
 
         .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(79, 172, 254, 0.3);
+            box-shadow: 0 10px 20px rgba(46, 139, 87, 0.3);
         }
 
         .btn:active {
             transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #4682B4 0%, #5F9EA0 100%);
+            margin-top: 10px;
+        }
+
+        .btn-secondary:hover {
+            box-shadow: 0 10px 20px rgba(70, 130, 180, 0.3);
+        }
+
+        .btn-clear {
+            background: linear-gradient(135deg, #FF6347 0%, #FF7F50 100%);
+            margin-top: 10px;
+        }
+
+        .btn-clear:hover {
+            box-shadow: 0 10px 20px rgba(255, 99, 71, 0.3);
         }
 
         .entry-card {
@@ -154,7 +184,7 @@
             margin-bottom: 20px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             transition: all 0.3s ease;
-            border-left: 4px solid #4facfe;
+            border-left: 4px solid #2E8B57;
         }
 
         .entry-card:hover {
@@ -162,43 +192,65 @@
             box-shadow: 0 15px 30px rgba(0,0,0,0.15);
         }
 
-        .entry-date {
+        .entry-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .entry-name {
+            background: linear-gradient(135deg, #2E8B57 0%, #32CD32 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 1.1em;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .entry-datetime {
             font-size: 0.9em;
             color: #666;
-            margin-bottom: 10px;
             font-weight: 500;
         }
 
-        .entry-class {
-            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
-            color: white;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.85em;
-            font-weight: 600;
-            display: inline-block;
-            margin-bottom: 10px;
+        .entry-quran {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 3px solid #2E8B57;
         }
 
-        .entry-activity {
+        .quran-info {
             font-weight: 600;
-            color: #333;
-            margin-bottom: 8px;
-            font-size: 1.1em;
+            color: #2E8B57;
+            font-size: 1.2em;
+            margin-bottom: 5px;
         }
 
         .entry-notes {
             color: #666;
             line-height: 1.6;
-            margin-bottom: 10px;
+            margin-top: 10px;
+            font-style: italic;
         }
 
-        .entry-student-count {
-            background: #e8f4f8;
+        .delete-btn {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff8787 100%);
+            color: white;
+            border: none;
             padding: 8px 12px;
             border-radius: 6px;
-            font-size: 0.9em;
-            color: #555;
+            font-size: 0.8em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .delete-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
         }
 
         .loading {
@@ -225,21 +277,19 @@
             border-left: 4px solid #2e7d32;
         }
 
-        .delete-btn {
-            background: linear-gradient(135deg, #ff6b6b 0%, #ff8787 100%);
-            color: white;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 6px;
-            font-size: 0.8em;
-            cursor: pointer;
-            float: right;
-            transition: all 0.3s ease;
+        .student-list {
+            max-height: 600px;
+            overflow-y: auto;
         }
 
-        .delete-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+        .progress-summary {
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 600;
         }
 
         @media (max-width: 768px) {
@@ -259,73 +309,106 @@
             h1 {
                 font-size: 2em;
             }
+            
+            .entry-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>📚 Jurnal Harian Guru</h1>
-            <p class="subtitle">Sistem Pencatatan Kegiatan Pembelajaran</p>
+            <h1>🕌 Sistem Pencatatan Ngaji Santri</h1>
+            <p class="subtitle">Pencatatan Setoran Al-Qur'an Santri</p>
         </header>
 
         <div class="main-content">
             <div class="form-section">
-                <h2>Tambah Entri Baru</h2>
+                <h2>Input Setoran Baru</h2>
                 <div id="message"></div>
                 
-                <form id="journalForm">
+                <form id="ngajiForm">
                     <div class="form-group">
-                        <label for="date">Tanggal:</label>
-                        <input type="date" id="date" name="date" required>
+                        <label for="studentName">Nama Santri:</label>
+                        <input type="text" id="studentName" name="studentName" required placeholder="Nama lengkap santri">
                     </div>
 
                     <div class="form-group">
-                        <label for="class">Kelas:</label>
-                        <select id="class" name="class" required>
-                            <option value="">Pilih Kelas</option>
-                            <option value="X IPA 1">X IPA 1</option>
-                            <option value="X IPA 2">X IPA 2</option>
-                            <option value="X IPS 1">X IPS 1</option>
-                            <option value="X IPS 2">X IPS 2</option>
-                            <option value="XI IPA 1">XI IPA 1</option>
-                            <option value="XI IPA 2">XI IPA 2</option>
-                            <option value="XI IPS 1">XI IPS 1</option>
-                            <option value="XI IPS 2">XI IPS 2</option>
-                            <option value="XII IPA 1">XII IPA 1</option>
-                            <option value="XII IPA 2">XII IPA 2</option>
-                            <option value="XII IPS 1">XII IPS 1</option>
-                            <option value="XII IPS 2">XII IPS 2</option>
+                        <label for="juz">Juz:</label>
+                        <select id="juz" name="juz" required>
+                            <option value="">Pilih Juz</option>
+                            <option value="1">Juz 1 (Al-Baqarah 1-141)</option>
+                            <option value="2">Juz 2 (Al-Baqarah 142-252)</option>
+                            <option value="3">Juz 3 (Al-Baqarah 253 - Ali Imran 92)</option>
+                            <option value="4">Juz 4 (Ali Imran 93 - An-Nisa 23)</option>
+                            <option value="5">Juz 5 (An-Nisa 24-147)</option>
+                            <option value="6">Juz 6 (An-Nisa 148 - Al-Maidah 81)</option>
+                            <option value="7">Juz 7 (Al-Maidah 82 - Al-An'am 110)</option>
+                            <option value="8">Juz 8 (Al-An'am 111 - Al-A'raf 87)</option>
+                            <option value="9">Juz 9 (Al-A'raf 88 - Al-Anfal 40)</option>
+                            <option value="10">Juz 10 (Al-Anfal 41 - At-Taubah 92)</option>
+                            <option value="11">Juz 11 (At-Taubah 93 - Hud 5)</option>
+                            <option value="12">Juz 12 (Hud 6 - Yusuf 52)</option>
+                            <option value="13">Juz 13 (Yusuf 53 - Ibrahim 52)</option>
+                            <option value="14">Juz 14 (Al-Hijr 1 - An-Nahl 128)</option>
+                            <option value="15">Juz 15 (Al-Isra 1 - Al-Kahf 74)</option>
+                            <option value="16">Juz 16 (Al-Kahf 75 - Taha 135)</option>
+                            <option value="17">Juz 17 (Al-Anbiya 1 - Al-Hajj 78)</option>
+                            <option value="18">Juz 18 (Al-Mu'minun 1 - Al-Furqan 20)</option>
+                            <option value="19">Juz 19 (Al-Furqan 21 - An-Naml 55)</option>
+                            <option value="20">Juz 20 (An-Naml 56 - Al-Ankabut 45)</option>
+                            <option value="21">Juz 21 (Al-Ankabut 46 - Al-Ahzab 30)</option>
+                            <option value="22">Juz 22 (Al-Ahzab 31 - Yasin 27)</option>
+                            <option value="23">Juz 23 (Yasin 28 - Az-Zumar 31)</option>
+                            <option value="24">Juz 24 (Az-Zumar 32 - Fussilat 46)</option>
+                            <option value="25">Juz 25 (Fussilat 47 - Al-Jathiyah 37)</option>
+                            <option value="26">Juz 26 (Al-Ahqaf 1 - Az-Zariyat 30)</option>
+                            <option value="27">Juz 27 (Az-Zariyat 31 - Al-Hadid 29)</option>
+                            <option value="28">Juz 28 (Al-Mujadila 1 - At-Tahrim 12)</option>
+                            <option value="29">Juz 29 (Al-Mulk 1 - Al-Mursalat 50)</option>
+                            <option value="30">Juz 30 (An-Naba 1 - An-Nas 6)</option>
                         </select>
                     </div>
 
                     <div class="form-group">
-                        <label for="subject">Mata Pelajaran:</label>
-                        <input type="text" id="subject" name="subject" required placeholder="Contoh: Matematika">
+                        <label for="startPage">Halaman Awal:</label>
+                        <input type="number" id="startPage" name="startPage" required min="1" max="604" placeholder="1">
                     </div>
 
                     <div class="form-group">
-                        <label for="activity">Kegiatan/Materi:</label>
-                        <input type="text" id="activity" name="activity" required placeholder="Contoh: Integral Trigonometri">
+                        <label for="endPage">Halaman Akhir:</label>
+                        <input type="number" id="endPage" name="endPage" required min="1" max="604" placeholder="1">
                     </div>
 
                     <div class="form-group">
-                        <label for="studentCount">Jumlah Siswa Hadir:</label>
-                        <input type="number" id="studentCount" name="studentCount" required min="0" max="50">
+                        <label for="notes">Catatan (Opsional):</label>
+                        <textarea id="notes" name="notes" placeholder="Catatan tambahan, evaluasi bacaan, dll..."></textarea>
                     </div>
 
-                    <div class="form-group">
-                        <label for="notes">Catatan:</label>
-                        <textarea id="notes" name="notes" placeholder="Catatan tambahan, kendala, atau evaluasi..."></textarea>
-                    </div>
-
-                    <button type="submit" class="btn">💾 Simpan Entri</button>
+                    <button type="submit" class="btn">📝 Simpan Setoran</button>
                 </form>
             </div>
 
             <div class="entries-section">
-                <h2>Entri Terbaru</h2>
-                <div id="entriesList">
+                <div class="filter-section">
+                    <h3>Filter Data</h3>
+                    <div class="form-group">
+                        <label for="filterStudent">Pilih Santri:</label>
+                        <select id="filterStudent">
+                            <option value="">Semua Santri</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-secondary" onclick="filterByStudent()">🔍 Tampilkan Data</button>
+                    <button class="btn btn-clear" onclick="clearFilter()">🔄 Tampilkan Semua</button>
+                </div>
+
+                <div id="progressSummary"></div>
+                
+                <h2>Data Setoran</h2>
+                <div class="student-list" id="entriesList">
                     <div class="loading">Memuat data...</div>
                 </div>
             </div>
@@ -336,7 +419,7 @@
     <script type="module">
         // Import Firebase modules
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js';
-        import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, orderBy, query } from 'https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js';
+        import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, orderBy, query, where } from 'https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js';
 
         // GANTI DENGAN KONFIGURASI FIREBASE ANDA
         const firebaseConfig = {
@@ -353,13 +436,14 @@
         const db = getFirestore(app);
 
         // DOM elements
-        const form = document.getElementById('journalForm');
+        const form = document.getElementById('ngajiForm');
         const entriesList = document.getElementById('entriesList');
         const messageDiv = document.getElementById('message');
-        const dateInput = document.getElementById('date');
+        const filterStudent = document.getElementById('filterStudent');
+        const progressSummary = document.getElementById('progressSummary');
 
-        // Set today's date as default
-        dateInput.value = new Date().toISOString().split('T')[0];
+        let allEntries = [];
+        let studentNames = [];
 
         // Show message
         function showMessage(message, type = 'success') {
@@ -369,90 +453,225 @@
             }, 3000);
         }
 
-        // Format date to Indonesian
-        function formatDate(dateString) {
-            const date = new Date(dateString);
-            return date.toLocaleDateString('id-ID', {
+        // Format date time to Indonesian
+        function formatDateTime(date) {
+            return new Date(date).toLocaleString('id-ID', {
                 weekday: 'long',
                 year: 'numeric',
                 month: 'long',
-                day: 'numeric'
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
             });
         }
 
-        // Add journal entry
+        // Get Juz name
+        function getJuzName(juzNumber) {
+            const juzNames = {
+                '1': 'Juz 1 (Al-Baqarah 1-141)',
+                '2': 'Juz 2 (Al-Baqarah 142-252)',
+                '3': 'Juz 3 (Al-Baqarah 253 - Ali Imran 92)',
+                '4': 'Juz 4 (Ali Imran 93 - An-Nisa 23)',
+                '5': 'Juz 5 (An-Nisa 24-147)',
+                '6': 'Juz 6 (An-Nisa 148 - Al-Maidah 81)',
+                '7': 'Juz 7 (Al-Maidah 82 - Al-An\'am 110)',
+                '8': 'Juz 8 (Al-An\'am 111 - Al-A\'raf 87)',
+                '9': 'Juz 9 (Al-A\'raf 88 - Al-Anfal 40)',
+                '10': 'Juz 10 (Al-Anfal 41 - At-Taubah 92)',
+                '11': 'Juz 11 (At-Taubah 93 - Hud 5)',
+                '12': 'Juz 12 (Hud 6 - Yusuf 52)',
+                '13': 'Juz 13 (Yusuf 53 - Ibrahim 52)',
+                '14': 'Juz 14 (Al-Hijr 1 - An-Nahl 128)',
+                '15': 'Juz 15 (Al-Isra 1 - Al-Kahf 74)',
+                '16': 'Juz 16 (Al-Kahf 75 - Taha 135)',
+                '17': 'Juz 17 (Al-Anbiya 1 - Al-Hajj 78)',
+                '18': 'Juz 18 (Al-Mu\'minun 1 - Al-Furqan 20)',
+                '19': 'Juz 19 (Al-Furqan 21 - An-Naml 55)',
+                '20': 'Juz 20 (An-Naml 56 - Al-Ankabut 45)',
+                '21': 'Juz 21 (Al-Ankabut 46 - Al-Ahzab 30)',
+                '22': 'Juz 22 (Al-Ahzab 31 - Yasin 27)',
+                '23': 'Juz 23 (Yasin 28 - Az-Zumar 31)',
+                '24': 'Juz 24 (Az-Zumar 32 - Fussilat 46)',
+                '25': 'Juz 25 (Fussilat 47 - Al-Jathiyah 37)',
+                '26': 'Juz 26 (Al-Ahqaf 1 - Az-Zariyat 30)',
+                '27': 'Juz 27 (Az-Zariyat 31 - Al-Hadid 29)',
+                '28': 'Juz 28 (Al-Mujadila 1 - At-Tahrim 12)',
+                '29': 'Juz 29 (Al-Mulk 1 - Al-Mursalat 50)',
+                '30': 'Juz 30 (An-Naba 1 - An-Nas 6)'
+            };
+            return juzNames[juzNumber] || `Juz ${juzNumber}`;
+        }
+
+        // Calculate progress summary for a student
+        function calculateProgress(studentEntries) {
+            const totalPages = studentEntries.reduce((sum, entry) => {
+                return sum + (parseInt(entry.endPage) - parseInt(entry.startPage) + 1);
+            }, 0);
+            
+            const uniqueJuz = [...new Set(studentEntries.map(entry => entry.juz))];
+            
+            return {
+                totalPages,
+                totalJuz: uniqueJuz.length,
+                totalEntries: studentEntries.length
+            };
+        }
+
+        // Update student filter dropdown
+        function updateStudentFilter() {
+            const uniqueNames = [...new Set(allEntries.map(entry => entry.studentName))].sort();
+            
+            filterStudent.innerHTML = '<option value="">Semua Santri</option>';
+            uniqueNames.forEach(name => {
+                filterStudent.innerHTML += `<option value="${name}">${name}</option>`;
+            });
+        }
+
+        // Add ngaji entry
         async function addEntry(entryData) {
             try {
-                await addDoc(collection(db, 'journal-entries'), entryData);
-                showMessage('Entri berhasil disimpan!', 'success');
+                await addDoc(collection(db, 'ngaji-entries'), entryData);
+                showMessage('Setoran berhasil disimpan!', 'success');
                 form.reset();
-                dateInput.value = new Date().toISOString().split('T')[0];
                 loadEntries();
             } catch (error) {
                 console.error('Error adding entry:', error);
-                showMessage('Gagal menyimpan entri. Silakan coba lagi.', 'error');
+                showMessage('Gagal menyimpan setoran. Silakan coba lagi.', 'error');
             }
         }
 
         // Load entries
         async function loadEntries() {
             try {
-                const q = query(collection(db, 'journal-entries'), orderBy('date', 'desc'));
+                const q = query(collection(db, 'ngaji-entries'), orderBy('timestamp', 'desc'));
                 const querySnapshot = await getDocs(q);
                 
-                if (querySnapshot.empty) {
-                    entriesList.innerHTML = '<div class="loading">Belum ada entri jurnal.</div>';
-                    return;
-                }
-
-                let entriesHTML = '';
+                allEntries = [];
                 querySnapshot.forEach((doc) => {
-                    const data = doc.data();
-                    entriesHTML += `
-                        <div class="entry-card">
-                            <button class="delete-btn" onclick="deleteEntry('${doc.id}')">🗑️</button>
-                            <div class="entry-date">${formatDate(data.date)}</div>
-                            <div class="entry-class">${data.class} - ${data.subject}</div>
-                            <div class="entry-activity">${data.activity}</div>
-                            <div class="entry-notes">${data.notes || 'Tidak ada catatan tambahan'}</div>
-                            <div class="entry-student-count">👥 ${data.studentCount} siswa hadir</div>
-                        </div>
-                    `;
+                    allEntries.push({ id: doc.id, ...doc.data() });
                 });
-                
-                entriesList.innerHTML = entriesHTML;
+
+                updateStudentFilter();
+                displayEntries(allEntries);
             } catch (error) {
                 console.error('Error loading entries:', error);
                 entriesList.innerHTML = '<div class="error">Gagal memuat data. Silakan refresh halaman.</div>';
             }
         }
 
+        // Display entries
+        function displayEntries(entries) {
+            if (entries.length === 0) {
+                entriesList.innerHTML = '<div class="loading">Belum ada data setoran.</div>';
+                progressSummary.innerHTML = '';
+                return;
+            }
+
+            // Show progress summary if filtering by student
+            const selectedStudent = filterStudent.value;
+            if (selectedStudent) {
+                const studentEntries = entries.filter(entry => entry.studentName === selectedStudent);
+                const progress = calculateProgress(studentEntries);
+                
+                progressSummary.innerHTML = `
+                    <div class="progress-summary">
+                        📊 Ringkasan Progress ${selectedStudent}<br>
+                        📖 Total Halaman: ${progress.totalPages} | 
+                        📚 Total Juz: ${progress.totalJuz} | 
+                        📝 Total Setoran: ${progress.totalEntries}
+                    </div>
+                `;
+            } else {
+                progressSummary.innerHTML = '';
+            }
+
+            let entriesHTML = '';
+            entries.forEach((entry) => {
+                const pageCount = parseInt(entry.endPage) - parseInt(entry.startPage) + 1;
+                entriesHTML += `
+                    <div class="entry-card">
+                        <div class="entry-header">
+                            <div class="entry-name">${entry.studentName}</div>
+                            <div class="entry-datetime">${formatDateTime(entry.timestamp.toDate())}</div>
+                            <button class="delete-btn" onclick="deleteEntry('${entry.id}')">🗑️</button>
+                        </div>
+                        <div class="entry-quran">
+                            <div class="quran-info">📖 ${getJuzName(entry.juz)}</div>
+                            <div>📄 Halaman ${entry.startPage} - ${entry.endPage} (${pageCount} halaman)</div>
+                        </div>
+                        ${entry.notes ? `<div class="entry-notes">💬 ${entry.notes}</div>` : ''}
+                    </div>
+                `;
+            });
+            
+            entriesList.innerHTML = entriesHTML;
+        }
+
+        // Filter by student
+        window.filterByStudent = function() {
+            const selectedStudent = filterStudent.value;
+            if (selectedStudent) {
+                const filteredEntries = allEntries.filter(entry => entry.studentName === selectedStudent);
+                displayEntries(filteredEntries);
+            } else {
+                displayEntries(allEntries);
+            }
+        };
+
+        // Clear filter
+        window.clearFilter = function() {
+            filterStudent.value = '';
+            displayEntries(allEntries);
+        };
+
         // Delete entry
         window.deleteEntry = async function(id) {
-            if (confirm('Apakah Anda yakin ingin menghapus entri ini?')) {
+            if (confirm('Apakah Anda yakin ingin menghapus data setoran ini?')) {
                 try {
-                    await deleteDoc(doc(db, 'journal-entries', id));
-                    showMessage('Entri berhasil dihapus!', 'success');
+                    await deleteDoc(doc(db, 'ngaji-entries', id));
+                    showMessage('Data setoran berhasil dihapus!', 'success');
                     loadEntries();
                 } catch (error) {
                     console.error('Error deleting entry:', error);
-                    showMessage('Gagal menghapus entri.', 'error');
+                    showMessage('Gagal menghapus data setoran.', 'error');
                 }
             }
         };
+
+        // Form validation
+        function validateForm(formData) {
+            const startPage = parseInt(formData.get('startPage'));
+            const endPage = parseInt(formData.get('endPage'));
+            
+            if (startPage > endPage) {
+                showMessage('Halaman awal tidak boleh lebih besar dari halaman akhir!', 'error');
+                return false;
+            }
+            
+            if (startPage < 1 || endPage < 1 || startPage > 604 || endPage > 604) {
+                showMessage('Nomor halaman harus antara 1-604!', 'error');
+                return false;
+            }
+            
+            return true;
+        }
 
         // Form submission
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
             
             const formData = new FormData(form);
+            
+            if (!validateForm(formData)) {
+                return;
+            }
+            
             const entryData = {
-                date: formData.get('date'),
-                class: formData.get('class'),
-                subject: formData.get('subject'),
-                activity: formData.get('activity'),
-                studentCount: parseInt(formData.get('studentCount')),
-                notes: formData.get('notes'),
+                studentName: formData.get('studentName').trim(),
+                juz: formData.get('juz'),
+                startPage: parseInt(formData.get('startPage')),
+                endPage: parseInt(formData.get('endPage')),
+                notes: formData.get('notes').trim(),
                 timestamp: new Date()
             };
 
